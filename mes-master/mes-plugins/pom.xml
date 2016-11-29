@@ -68,6 +68,7 @@
         <module>mes-plugins-cmms-machine-parts</module>
         <module>mes-plugins-warehouse-minimal-state</module>
         <module>mes-pack-open-source</module>
+		<module>warehouse</module>
     </modules>
 
 </project>

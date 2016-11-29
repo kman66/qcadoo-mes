@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- the 'name' attribute determines the the name of the view, not the file
+     name;
+     the modelName attribute describes on which entities fields
+     do we concentrate here;
+     the menuAccessible attribute indicates that this view will be available
+     from the main menu
+-->
+<view name="purchasesList" modelName="purchase" menuAccessible="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://schema.qcadoo.org/view"
+    xsi:schemaLocation="http://schema.qcadoo.org/view http://schema.qcadoo.org/view.xsd">
+ 
+    <!-- a window is always the most outer container for other components -->
+    <component type="window" name="window">
+        <!-- a ribbon is the big horizontal menu at the top -->
+        <ribbon>
+            <group template="gridNewCopyAndRemoveAction" />
+        </ribbon>
+        <!-- grid = table -->
+        <component type="grid" name="grid" reference="grid">
+            <option type="column" name="product" expression="#product['name']" link="true" />
+            <option type="column" name="quantity" fields="quantity" />
+            <option type="column" name="unit" fields="unit" />
+            <option type="column" name="price" fields="price" />
+            <option type="column" name="currency" fields="currency" />
+            <option type="column" name="purchasedDate" fields="purchasedDate" />
+            <option type="correspondingView" value="warehouse/purchaseDetails" />
+            <option type="correspondingComponent" value="form" />
+            <option type="searchable" value="product" />
+            <option type="orderable" value="product" />
+            <option type="fullScreen" value="true" />
+            <option type="order" column="product" direction="asc"/>
+        </component>
+        <option type="fixedHeight" value="true" />
+        <option type="header" value="false" />
+    </component>
+    <hooks>
+    </hooks>
+</view>

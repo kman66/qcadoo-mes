@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- remember that this 'name' attribute determines the name of the entity,
+     not the file name
+-->
+<model name="purchase"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://schema.qcadoo.org/model"
+    xsi:schemaLocation="http://schema.qcadoo.org/model http://schema.qcadoo.org/model.xsd">
+ 
+    <fields>
+        <belongsTo name="product" required="true" model="product" plugin="basic" />
+        <datetime name="purchasedDate" />
+        <decimal name="quantity" default="0" >
+            <validatesRange from="0" exclusively="true" message="error.value.must.be.positive"/>
+        </decimal>
+	    <string name="unit" readonly="true" />
+	    <decimal name="price" required="true" >
+            <validatesRange from="0" exclusively="true" message="error.value.must.be.positive"/>
+        </decimal>
+	    <string name="currency" readonly="true" />
+    </fields>
+    <hooks>
+    	<validatesWith class="com.warehousecorporation.warehouse.hooks.ModelPurchaseHooks" method="checkIfProductWithPriceAlreadyExists" />
+    </hooks>
+    <identifier expression="#number" />
+</model>

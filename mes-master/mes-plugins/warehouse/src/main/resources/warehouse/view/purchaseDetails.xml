@@ -1,0 +1,48 @@
+<view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schema.qcadoo.org/view"
+	xsi:schemaLocation="http://schema.qcadoo.org/view http://schema.qcadoo.org/view.xsd"
+	name="purchaseDetails" modelName="purchase">
+    <component type="window" name="window" reference="window">
+        <ribbon>
+            <group template="navigation" />
+            <group template="formSaveCopyAndRemoveActions" />
+        </ribbon>
+        <component type="form" name="form" reference="form">
+            <!-- a grid layout component gives us more control how the inputs will be positioned -->
+            <component type="gridLayout" name="gridLayout" columns="2" rows="3" hasBorders="false">
+                <layoutElement column="1" row="1">
+                    <component type="lookup" name="product" field="product">
+			<option type="column" name="number" fields="number" link="true" />
+			<option type="column" name="name" fields="name" link="true" />
+			<option type="searchable" value="name,category" />
+			<option type="orderable" value="name,category" />
+			<option type="fullScreen" value="true" />
+			<option type="expression" value="#name" />
+			<option type="fieldCode" value="number" />	
+                    </component>
+                </layoutElement>
+                <layoutElement column="2" row="1">
+                    <component type="calendar" name="purchasedDate" field="purchasedDate">
+                        <option type="withTimePicker" value="true" />
+                    </component>
+                </layoutElement>
+		<layoutElement column="1" row="2" >
+                    <component type="input" name="quantity" field="quantity" reference="purchaseQuantity" />
+		</layoutElement>
+		<layoutElement column="2" row="2" >
+                    <component type="input" name="unit" field="unit" reference="productUnit" />
+                </layoutElement>
+                <layoutElement column="1" row="3" >
+                    <component type="input" name="price" field="price" />
+                </layoutElement>
+                <layoutElement column="2" row="3" >
+                    <component type="input" name="currency" field="currency" />
+                </layoutElement>
+            </component>        
+                
+            <option type="expression" value="#quantity + ' x ' + ' (' + #product['name'] + ')'" />
+            <option type="header" value="false" />
+        </component>
+    </component>
+    <hooks>
+    </hooks>
+</view>
