@@ -13,11 +13,11 @@
         <decimal name="quantity" default="0" >
             <validatesRange from="0" exclusively="true" message="error.value.must.be.positive"/>
         </decimal>
-	    <string name="unit" readonly="true" />
+	    <string name="unit" />
 	    <decimal name="price" required="true" >
             <validatesRange from="0" exclusively="true" message="error.value.must.be.positive"/>
         </decimal>
-	    <string name="currency" readonly="true" />
+	    <string name="currency" />
     </fields>
     <hooks>
     	<validatesWith class="com.warehousecorporation.warehouse.hooks.ModelPurchaseHooks" method="checkIfProductWithPriceAlreadyExists" />

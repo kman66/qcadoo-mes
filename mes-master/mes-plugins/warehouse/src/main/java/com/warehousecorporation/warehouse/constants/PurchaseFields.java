@@ -30,15 +30,15 @@ public final class PurchaseFields {
 
     }
 
-	public static final String PRODUCT = "product";
+	    public static final String PRODUCT = "product";
 	
         public static final String PURCHASED_DATE = "purchasedDate";
         
-	public static final String QUANTITY = "quantity";
+	    public static final String QUANTITY = "quantity";
         
         public static final String UNIT = "unit";
 	
-	public static final String PRICE = "price";
+	    public static final String PRICE = "price";
         
         public static final String CURRENCY = "currency";
 

@@ -10,14 +10,15 @@
             <!-- a grid layout component gives us more control how the inputs will be positioned -->
             <component type="gridLayout" name="gridLayout" columns="2" rows="3" hasBorders="false">
                 <layoutElement column="1" row="1">
-                    <component type="lookup" name="product" field="product">
-			<option type="column" name="number" fields="number" link="true" />
-			<option type="column" name="name" fields="name" link="true" />
-			<option type="searchable" value="name,category" />
-			<option type="orderable" value="name,category" />
-			<option type="fullScreen" value="true" />
-			<option type="expression" value="#name" />
-			<option type="fieldCode" value="number" />	
+                    <component type="lookup" name="product" field="product" reference="purchaseProduct">
+			            <option type="column" name="number" fields="number" link="true" />
+                        <option type="column" name="name" fields="name" link="true" />
+			            <option type="searchable" value="name,category" />
+			            <option type="orderable" value="name,category" />
+			            <option type="fullScreen" value="true" />
+			            <option type="expression" value="#name" />
+			            <option type="fieldCode" value="number" />
+                        <listener event="onSelectedEntityChange" method="setProductDefaultUnit" class="com.warehousecorporation.warehouse.hooks.ViewPurchaseHooks" />
                     </component>
                 </layoutElement>
                 <layoutElement column="2" row="1">
@@ -25,17 +26,17 @@
                         <option type="withTimePicker" value="true" />
                     </component>
                 </layoutElement>
-		<layoutElement column="1" row="2" >
+		        <layoutElement column="1" row="2" >
                     <component type="input" name="quantity" field="quantity" reference="purchaseQuantity" />
-		</layoutElement>
-		<layoutElement column="2" row="2" >
+		        </layoutElement>
+		        <layoutElement column="2" row="2" >
                     <component type="input" name="unit" field="unit" reference="productUnit" />
                 </layoutElement>
                 <layoutElement column="1" row="3" >
                     <component type="input" name="price" field="price" />
                 </layoutElement>
                 <layoutElement column="2" row="3" >
-                    <component type="input" name="currency" field="currency" />
+                    <component type="input" name="currency" field="currency" reference="purchaseCurrency"/>
                 </layoutElement>
             </component>        
                 
@@ -44,5 +45,6 @@
         </component>
     </component>
     <hooks>
+        <beforeRender class="com.warehousecorporation.warehouse.hooks.ViewPurchaseHooks" method="setDefaultCurrency" />
     </hooks>
 </view>
