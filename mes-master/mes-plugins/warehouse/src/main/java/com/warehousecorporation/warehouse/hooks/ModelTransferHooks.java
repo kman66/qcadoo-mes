@@ -26,29 +26,32 @@ public class ModelTransferHooks {
     private SecurityService securityService;
 
     public void setWorkersDatesAndResourceQuantity(final DataDefinition transferDD, final Entity transfer) {
+
+        final String currentUser = securityService.getCurrentUserName();
+
         if("03correction".equals(transfer.getStringField(TransferFields.TYPE))){
-			transfer.setField(TransferFields.REQUEST_WORKER, securityService.getCurrentUserName());
+			transfer.setField(TransferFields.REQUEST_WORKER, currentUser);
 			transfer.setField(TransferFields.REQUEST_DATE, new Date());
-			transfer.setField(TransferFields.CONFIRM_WORKER, securityService.getCurrentUserName());
+			transfer.setField(TransferFields.CONFIRM_WORKER, currentUser);
 			transfer.setField(TransferFields.CONFIRM_DATE, new Date());
 			return;
 		}
 		
 		if (transfer.getId() == null) {
-            transfer.setField(TransferFields.REQUEST_WORKER, securityService.getCurrentUserName());
+            transfer.setField(TransferFields.REQUEST_WORKER, currentUser);
             transfer.setField(TransferFields.REQUEST_DATE, new Date());
         }
 		
         if ("02done".equals(transfer.getStringField(TransferFields.STATUS))) {
-            transfer.setField(TransferFields.CONFIRM_WORKER, securityService.getCurrentUserName());
+            transfer.setField(TransferFields.CONFIRM_WORKER, currentUser);
             transfer.setField(TransferFields.CONFIRM_DATE, new Date());
 
             DataDefinition resourceDataDefinition = dataDefinitionService.get(WarehouseConstants.PLUGIN_IDENTIFIER, WarehouseConstants.MODEL_RESOURCE);
 
             Entity resource = transfer.getBelongsToField(TransferFields.RESOURCE);
 
-            BigDecimal currentQuantity = (BigDecimal)resource.getField(ResourceFields.QUANTITY);
-            BigDecimal transferQuantity = (BigDecimal)transfer.getField(TransferFields.QUANTITY);
+            BigDecimal currentQuantity = resource.getDecimalField(ResourceFields.QUANTITY);
+            BigDecimal transferQuantity = transfer.getDecimalField(TransferFields.QUANTITY);
             BigDecimal newQuantity;
 
             if ("02outgoing".equals(transfer.getStringField(TransferFields.TYPE))) {
@@ -65,12 +68,12 @@ public class ModelTransferHooks {
     }
 
     public boolean checkIfHasEnoughtQuantity(final DataDefinition transferDD, final Entity transfer) {
-        if ("02done".equals(transfer.getField(TransferFields.STATUS)) && "02outgoing".equals(transfer.getField(TransferFields.TYPE))) {
+        if ("02done".equals(transfer.getStringField(TransferFields.STATUS)) && "02outgoing".equals(transfer.getStringField(TransferFields.TYPE))) {
 
             Entity resource = transfer.getBelongsToField(TransferFields.RESOURCE);
 
-            BigDecimal currentQuantity = (BigDecimal)resource.getField(ResourceFields.QUANTITY);
-            BigDecimal transferQuantity = (BigDecimal)transfer.getField(TransferFields.QUANTITY);
+            BigDecimal currentQuantity = resource.getDecimalField(ResourceFields.QUANTITY);
+            BigDecimal transferQuantity = transfer.getDecimalField(TransferFields.QUANTITY);
 
             if (transferQuantity.compareTo(currentQuantity) > 0) {
                 transfer.addError(transferDD.getField(TransferFields.QUANTITY), "warehouse.not.enought.resource.error");

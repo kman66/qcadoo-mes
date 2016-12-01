@@ -27,9 +27,9 @@ public class ModelResourceHooks {
 		Entity correction = transferDataDefinition.create();
  
 		correction.setField(TransferFields.RESOURCE, resource);
-		correction.setField(TransferFields.QUANTITY, resource.getField(ResourceFields.QUANTITY));
-		correction.setField(TransferFields.TYPE, "correction");
-		correction.setField(TransferFields.STATUS, "closed");
+		correction.setField(TransferFields.QUANTITY, resource.getDecimalField(ResourceFields.QUANTITY));
+		correction.setField(TransferFields.TYPE, TransferFields.TRANSFER_TYPE_CORRECTION);
+		correction.setField(TransferFields.STATUS, TransferFields.TRANSFER_STATUS_CLOSED);
  
 		transferDataDefinition.save(correction);
 	}

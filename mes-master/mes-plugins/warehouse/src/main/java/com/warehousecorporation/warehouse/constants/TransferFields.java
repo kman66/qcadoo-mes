@@ -49,5 +49,17 @@ public final class TransferFields {
 	public static final String CONFIRM_WORKER = "confirmWorker";
 	
 	public static final String CONFIRM_DATE = "confirmDate";
+
+	public static final String TRANSFER_TYPE_INCOMING = "incoming";
+
+	public static final String TRANSFER_TYPE_OUTGOING = "outgoing";
+
+	public static final String TRANSFER_TYPE_CORRECTION = "correction";
+
+	public static final String TRANSFER_STATUS_PLANNED = "planned";
+
+	public static final String TRANSFER_STATUS_DONE = "done";
+
+	public static final String TRANSFER_STATUS_CLOSED = "closed";
     
 }

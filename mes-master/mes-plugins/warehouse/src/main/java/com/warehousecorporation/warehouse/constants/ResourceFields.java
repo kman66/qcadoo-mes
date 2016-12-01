@@ -29,7 +29,7 @@ public final class ResourceFields {
     private ResourceFields() {
 
     }
-	
+
 	public static final String NUMBER = "number";
 	
 	public static final String PRODUCT = "product";
