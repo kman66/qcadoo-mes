@@ -15,7 +15,7 @@ public class ViewResourceHooks {
 
     public void setResourceInitialQuantity(final ViewDefinitionState state) {
 
-        ComponentState quantity = (ComponentState) state.getComponentByReference("resourceQuantity");
+        ComponentState quantity = (ComponentState) state.getComponentByReference("quantity");
 
         if(quantity != null){
             if(quantity.getFieldValue() == null) {

@@ -15,7 +15,9 @@
     <component type="window" name="window">
         <!-- a ribbon is the big horizontal menu at the top -->
         <ribbon>
-            <group template="gridNewCopyAndRemoveAction" />
+            <group template="gridNewCopyAndRemoveAction" >
+                <bigButton name="countAvgPrice" state="initializeState" />
+            </group>
         </ribbon>
         <!-- grid = table -->
         <component type="grid" name="grid" reference="grid">

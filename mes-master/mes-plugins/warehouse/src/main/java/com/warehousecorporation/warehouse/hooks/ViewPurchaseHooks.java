@@ -37,15 +37,6 @@ public class ViewPurchaseHooks {
     public void setProductDefaultUnit(final ViewDefinitionState viewDefinitionState, final ComponentState state,
                                       final String[] args){
 
-        /*FieldComponent product = (FieldComponent) viewDefinitionState.getComponentByReference("purchaseProduct");
-        FieldComponent productUnit = (FieldComponent) viewDefinitionState.getComponentByReference("productUnit");
-        DataDefinition productDD = dataDefinitionService.get("basic", "product");
-        Long productId = (Long) product.getFieldValue();
-
-        if(productId != null){
-            productUnit.setFieldValue(productDD.get(productId).getStringField("unit"));
-        }*/
-
         LookupComponent lookupProduct = (LookupComponent) viewDefinitionState.getComponentByReference("purchaseProduct");
         FieldComponent productUnit = (FieldComponent) viewDefinitionState.getComponentByReference("productUnit");
         productUnit.setFieldValue(lookupProduct.getEntity().getStringField("unit"));
