@@ -18,6 +18,7 @@
             <validatesRange from="0" exclusively="true" message="error.value.must.be.positive"/>
         </decimal>
 	    <string name="currency" />
+        <decimal name="avgPrice" persistence="false" />
     </fields>
     <hooks>
     	<validatesWith class="com.warehousecorporation.warehouse.hooks.ModelPurchaseHooks" method="checkIfProductWithPriceAlreadyExists" />

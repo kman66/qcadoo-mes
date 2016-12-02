@@ -16,7 +16,9 @@
         <!-- a ribbon is the big horizontal menu at the top -->
         <ribbon>
             <group template="gridNewCopyAndRemoveAction" />
-            <!-- w tym miejscu chcialbym przycisk -->
+
+
+            <!-- w tym miejscu przycisk -->
 
         </ribbon>
         <!-- grid = table -->

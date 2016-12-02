@@ -23,15 +23,17 @@ import java.util.Locale;
 public class ViewPurchaseHooks {
 
     @Autowired
+    private PurchaseService purchaseService;
+
+    @Autowired
     private DataDefinitionService dataDefinitionService;
 
     public void setDefaultCurrency(final ViewDefinitionState view){
 
         Optional<FieldComponent> currency = view.tryFindComponentByReference("purchaseCurrency");
         if(currency.isPresent()){
-//            Locale defaultLocale = LocaleContextHolder.getLocale();   // nie dziala
-            Locale defaultLocale = Locale.getDefault();
-            Currency oCurrency = Currency.getInstance(defaultLocale);
+            Locale defaultLocale = LocaleContextHolder.getLocale();
+            Currency oCurrency = Currency.getInstance(defaultLocale.getDefault());
             currency.get().setFieldValue(oCurrency.getCurrencyCode());
         }
     }
@@ -39,13 +41,24 @@ public class ViewPurchaseHooks {
     public void setProductDefaultUnit(final ViewDefinitionState viewDefinitionState, final ComponentState state,
                                       final String[] args){
 
-//        LookupComponent lookupProduct = (LookupComponent) viewDefinitionState.getComponentByReference("purchaseProduct");
-//        FieldComponent productUnit = (FieldComponent) viewDefinitionState.getComponentByReference("productUnit");
         Optional<LookupComponent> lookupProduct = viewDefinitionState.tryFindComponentByReference("purchaseProduct");
         Optional<FieldComponent> productUnit = viewDefinitionState.tryFindComponentByReference("productUnit");
 
         if(lookupProduct.isPresent() && productUnit.isPresent()){
             productUnit.get().setFieldValue(lookupProduct.get().getEntity().getStringField(ProductFields.UNIT));
+        }
+    }
+
+    public void avgPrice(final ViewDefinitionState viewDefinitionState, final ComponentState state,
+                         final String[] args){
+        Optional<FieldComponent> avgPrice = viewDefinitionState.tryFindComponentByReference("avgPrice");
+
+        if(avgPrice.isPresent()){
+            FieldComponent avgPriceFC = avgPrice.get();
+            Double avg = purchaseService.getAvgPrice();
+            avgPriceFC.setFieldValue(avg);
+            avgPriceFC.requestComponentUpdateState();
+            viewDefinitionState.addMessage("basic.purchase.calculateAvaragePrice", ComponentState.MessageType.INFO, String.valueOf(avg));
         }
     }
 }

@@ -5,10 +5,13 @@
         <ribbon>
             <group template="navigation" />
             <group template="formSaveCopyAndRemoveActions" />
+            <group name="xyz">
+                <bigButton name="avgPrice" icon="saveIcon24.png" state="enabled" action="#{form}.fireEvent(avgPrice);"/>
+            </group>
         </ribbon>
         <component type="form" name="form" reference="form">
             <!-- a grid layout component gives us more control how the inputs will be positioned -->
-            <component type="gridLayout" name="gridLayout" columns="2" rows="3" hasBorders="false">
+            <component type="gridLayout" name="gridLayout" columns="2" rows="4" hasBorders="false">
                 <layoutElement column="1" row="1">
                     <component type="lookup" name="product" field="product" reference="purchaseProduct">
 			            <option type="column" name="number" fields="number" link="true" />
@@ -38,10 +41,18 @@
                 <layoutElement column="2" row="3" >
                     <component type="input" name="currency" field="currency" reference="purchaseCurrency"/>
                 </layoutElement>
+                <layoutElement column="1" row="4" >
+                    <component type="input" name="avgPrice" field="avgPrice" reference="avgPrice"/>
+                </layoutElement>
             </component>        
                 
             <option type="expression" value="#quantity + ' x ' + ' (' + #product['name'] + ')'" />
-            <option type="header" value="false" />
+            <option type="header" value="true" />
+
+            <listener event="avgPrice"
+                      class="com.warehousecorporation.warehouse.hooks.ViewPurchaseHooks"
+                      method="avgPrice"/>
+
         </component>
     </component>
     <hooks>
