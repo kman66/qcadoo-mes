@@ -5,7 +5,7 @@
         <ribbon>
             <group template="navigation" />
             <group template="formSaveCopyAndRemoveActions" />
-            <group name="xyz">
+            <group name="avg">
                 <bigButton name="avgPrice" icon="saveIcon24.png" state="enabled" action="#{form}.fireEvent(avgPrice);"/>
             </group>
         </ribbon>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.DoubleSummaryStatistics;
 import java.util.Map;
 
 /**
@@ -24,14 +25,21 @@ public class PurchaseService {
     private DataDefinitionService dataDefinitionService;
 
     public Double getAvgPrice(){
-        DataDefinition objDD = dataDefinitionService.get(WarehouseConstants.PLUGIN_IDENTIFIER, WarehouseConstants.MODEL_PURCHASE);
+        /*DataDefinition objDD = dataDefinitionService.get(WarehouseConstants.PLUGIN_IDENTIFIER, WarehouseConstants.MODEL_PURCHASE);
         Entity e = objDD.create();
         e.setField(PurchaseFields.UNIT, "testUnit");
         Entity newE = objDD.save(e);
         if(!newE.isValid()){
             Map<String, ErrorMessage> errors = newE.getErrors();
+        }*/
+        Double result = null;
+        DataDefinition warehouseDD = dataDefinitionService.get(WarehouseConstants.PLUGIN_IDENTIFIER, WarehouseConstants.MODEL_PURCHASE);
+        Long count = warehouseDD.count();
+        if(count > 0){
+            Entity entity = warehouseDD.find("select avg(price) as avg from #warehouse_purchase").uniqueResult();
+            result = (Double) entity.getField("avg");
         }
-        Entity entity = dataDefinitionService.get(WarehouseConstants.PLUGIN_IDENTIFIER, WarehouseConstants.MODEL_PURCHASE).find("select avg(price) as avg from #warehouse_purchase").uniqueResult();
-        return (Double) entity.getField("avg");
+
+        return result;
     }
 }
